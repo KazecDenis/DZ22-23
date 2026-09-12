@@ -15111,7 +15111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91d00ec2bb5474e29a3f18adf82f33f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 40
+  _maxHealth: 100
   _characterView: {fileID: 2109919435}
   _moveController: {fileID: 2109919432}
 --- !u!1001 &2109965464

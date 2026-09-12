@@ -9906,7 +9906,7 @@ MonoBehaviour:
   _damage: 20
   _explosionRadius: 3
   _triggerRadius: 3
-  _explosionDelay: 1
+  _explosionDelay: 1.5
   _explosionEffect: {fileID: 8458115078242854916}
 --- !u!1 &3917884964180116489
 GameObject:
