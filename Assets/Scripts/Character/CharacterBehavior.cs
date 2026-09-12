@@ -7,14 +7,12 @@ public class CharacterBehavior : MonoBehaviour, IDamageable
     [SerializeField] private MoveController _moveController;
     private Character _character;
     
-
     private void Awake()
     {
         _character = new Character(_maxHealth);
         _characterView.Initialize(_character);
         _moveController.Initialize(_character); 
     }
-        
 
     public void TakeDamage(int damage)
     {
@@ -32,6 +30,8 @@ public class CharacterBehavior : MonoBehaviour, IDamageable
         }
     }
 }
+        
+
 
    
 

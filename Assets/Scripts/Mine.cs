@@ -4,13 +4,12 @@ public class Mine : MonoBehaviour
 {
     [SerializeField] private int _damage = 20;
     [SerializeField] private float _explosionRadius = 3f;
-   [SerializeField] private float _triggerRadius = 3f;
-   [SerializeField] private float _explosionDelay = 3f;
-   [SerializeField] private ParticleSystem _explosionEffect;
+    [SerializeField] private float _triggerRadius = 3f;
+    [SerializeField] private float _explosionDelay = 3f;
+    [SerializeField] private ParticleSystem _explosionEffect;
     private bool _isExplode;
-   private bool _isActivate;
-   private float _timer;
-
+    private bool _isActivate;
+    private float _timer;
 
     private void Update()
     {
@@ -64,7 +63,6 @@ public class Mine : MonoBehaviour
         if (_isExplode)
             return;
 
-
         Collider[] colliders = Physics.OverlapSphere(transform.position, _explosionRadius);
 
         foreach (Collider collider in colliders)
@@ -81,5 +79,7 @@ public class Mine : MonoBehaviour
         Debug.Log("Взрыв");
     }
 }
+
                 
+
 

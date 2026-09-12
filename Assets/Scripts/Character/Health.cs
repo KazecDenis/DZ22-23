@@ -25,14 +25,4 @@ public class Health
         if (Current < 0)
             Current = 0;
     }
-    // тестил)
-    /*
-    public void Heal(int heal)
-    {
-        Current += heal;
-
-        if (Current > Max)
-            Current = Max;
-    }\
-    */
 }

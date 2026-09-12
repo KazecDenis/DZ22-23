@@ -11,7 +11,6 @@ public class NavMeshRotator
         _agent = agent;
         _rotate = rotate;
     }
-
     public void Update(float deltaTime)
     {
         Vector3 direction = _agent.steeringTarget - _agent.transform.position;
@@ -20,3 +19,4 @@ public class NavMeshRotator
         _rotate.Update(deltaTime);
     }
 }
+

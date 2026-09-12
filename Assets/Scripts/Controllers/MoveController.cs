@@ -41,7 +41,6 @@ public class MoveController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Vector3 position;
            
-
             if (_ray.GoRay(ray, out position))
             {   
                 _moveFlag.SetActive(true);
@@ -49,7 +48,7 @@ public class MoveController : MonoBehaviour
                 _movement.TrySetDestination(position);
             } 
         }
-
+        
         _navMeshRotator.Update(Time.deltaTime);
     }
 
@@ -58,6 +57,8 @@ public class MoveController : MonoBehaviour
         _movement.StopAgent();
     }
 }
+
+
                 
                
                 

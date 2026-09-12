@@ -1,5 +1,3 @@
-
-
 public class Character
 {
    public Health Health {get;}
@@ -9,3 +7,5 @@ public class Character
         Health = new Health(maxHealth);
     }
 }
+
+

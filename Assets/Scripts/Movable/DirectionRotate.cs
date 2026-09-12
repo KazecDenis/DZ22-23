@@ -11,7 +11,7 @@ public class DirectionRotate
         _transform = transform;
         _speedRotate = speedRotate;
     }
-
+    
     public void SetInputDirection(Vector3 direction) => _currentDirection = direction;
     public Quaternion CurrentRotate => _transform.rotation;
 
@@ -25,3 +25,4 @@ public class DirectionRotate
         _transform.rotation = Quaternion.RotateTowards(_transform.rotation, lookRotation, step);
     }
 }
+
