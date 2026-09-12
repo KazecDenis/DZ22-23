@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Mine : MonoBehaviour
 {
+    [SerializeField] private int _damage = 20;
+    [SerializeField] private float _explosionRadius = 3f;
    [SerializeField] private float _triggerRadius = 3f;
    [SerializeField] private float _explosionDelay = 3f;
    [SerializeField] private ParticleSystem _explosionEffect;
@@ -23,17 +25,18 @@ public class Mine : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, _triggerRadius);  
+        Gizmos.DrawWireSphere(transform.position, _triggerRadius);
+        Gizmos.DrawWireSphere(transform.position, _explosionRadius);    
     }
-
     private void CheckTrigger()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, _triggerRadius);
 
         foreach (Collider collider in colliders)
         {
-            CharacterBehavior character = collider.GetComponent<CharacterBehavior>();
-            if(character != null)
+            IDamageable damageable = collider.GetComponent<IDamageable>();
+
+            if(damageable != null)
             {
                 _isActivate = true;
                 Debug.Log("мина активирована");
@@ -60,6 +63,17 @@ public class Mine : MonoBehaviour
     {
         if (_isExplode)
             return;
+
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _explosionRadius);
+
+        foreach (Collider collider in colliders)
+        {
+            IDamageable damageable = collider.GetComponent<IDamageable>();
+
+            if(damageable != null)
+                damageable.TakeDamage(_damage);
+        }
 
         _isExplode = true;
         PlayExplodeEffect();

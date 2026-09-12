@@ -3,10 +3,10 @@ using UnityEngine.AI;
 
 public class NavMeshMovement
 {
-   private NavMeshAgent _agent;
-   private float _maxDistance = 2f;
+    private NavMeshAgent _agent;
+    private float _maxDistance = 2f;
 
-   public NavMeshMovement(NavMeshAgent navMeshAgent)
+    public NavMeshMovement(NavMeshAgent navMeshAgent)
     {
         _agent = navMeshAgent;
     }
@@ -15,10 +15,16 @@ public class NavMeshMovement
     {
         if (NavMesh.SamplePosition(position, out NavMeshHit hit, _maxDistance, NavMesh.AllAreas))
         {
+            _agent.isStopped = false;
             _agent.SetDestination(hit.position);
             return true;
         }
 
         return false;
+    }
+
+    public void StopAgent()
+    {
+        _agent.isStopped = true;
     }
 }

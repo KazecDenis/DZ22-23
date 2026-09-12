@@ -5,11 +5,13 @@ public class CharacterView : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private NavMeshAgent _agent;
-    [SerializeField] private string _layerIndex = "Wounded";
     [SerializeField] private Character _character;
     [SerializeField] private float _blendSpeed = 3f;
+    private string _layerIndex = "Wounded";
     private float _deadZone = 0.05f;
     private readonly int IsRunningKeyAnimator = Animator.StringToHash("IsRun");
+    private readonly int IsDeadKeyAnimator = Animator.StringToHash("IsDead");
+    private readonly string TakeDamageAnimationKey = "TakeDamage";
     private readonly float OnLayerWounded = 1f;
     private readonly float OffLayerWounded = 0f;
     private float _weight;
@@ -21,6 +23,9 @@ public class CharacterView : MonoBehaviour
 
     private void Update()
     {
+        if (_character.Health.IsDead)
+            return;
+
         UpdateMovementAnimation();
         UpdateHealthAnimation();
     }
@@ -38,21 +43,24 @@ public class CharacterView : MonoBehaviour
         else 
             StopRunning();
     }
-    
+
     private void UpdateHealthAnimation()
     {
         bool isWounded = _character.Health.IsWounded;
 
         float targetWeight = isWounded ? OnLayerWounded : OffLayerWounded;
-        _weight = Mathf.MoveTowards(_weight, targetWeight, _blendSpeed * Time.deltaTime);
 
+        _weight = Mathf.MoveTowards(_weight, targetWeight, _blendSpeed * Time.deltaTime);
 
         SetLayerWeight(_weight);
     }
     
     private void StartRunning() => _animator.SetBool(IsRunningKeyAnimator, true);
     private void StopRunning() => _animator.SetBool(IsRunningKeyAnimator, false);
+    public void StartDeadAnimation() => _animator.SetTrigger(IsDeadKeyAnimator);
+    public void StartTakeDamageAnimation() => _animator.SetTrigger(TakeDamageAnimationKey);
 }
+    
         
         
 

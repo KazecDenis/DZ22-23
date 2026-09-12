@@ -1,26 +1,38 @@
 using UnityEngine;
 
-public class CharacterBehavior : MonoBehaviour
+public class CharacterBehavior : MonoBehaviour, IDamageable
 {
     [SerializeField] private int _maxHealth = 100;
     [SerializeField] private CharacterView _characterView;
+    [SerializeField] private MoveController _moveController;
     private Character _character;
+    
 
     private void Awake()
     {
         _character = new Character(_maxHealth);
-        _characterView.Initialize(_character);  
+        _characterView.Initialize(_character);
+        _moveController.Initialize(_character); 
     }
+        
 
-    private void Update()
+    public void TakeDamage(int damage)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (_character.Health.IsDead)
+            return;
+
+        _character.Health.TakeDamage(damage);
+        _characterView.StartTakeDamageAnimation();
+        Debug.Log(_character.Health.Current);
+
+        if (_character.Health.IsDead)
         {
-            _character.Health.TakeDamage(20);
-        }  
-        if (Input.GetKeyDown(KeyCode.F))
-            _character.Health.Heal(20);
+            _moveController.Stop();
+            _characterView.StartDeadAnimation();
+        }
     }
 }
+
+   
 
         

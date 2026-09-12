@@ -11,7 +11,12 @@ public class MoveController : MonoBehaviour
     [SerializeField] private GameObject _moveFlagGameObject;
     [SerializeField] private float _rotateSpeed;
     private GameObject _moveFlag;
+    private Character _character;
 
+    public void Initialize(Character character)
+    {
+        _character = character;
+    }
     private void Awake()
     {
         _playerInput = new PlayerInput();
@@ -28,6 +33,9 @@ public class MoveController : MonoBehaviour
 
     private void Update()
     {
+        if (_character.Health.IsDead)
+            return;
+
         if (_playerInput.IsLeftMouseButton())
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -43,6 +51,11 @@ public class MoveController : MonoBehaviour
         }
 
         _navMeshRotator.Update(Time.deltaTime);
+    }
+
+    public void Stop()
+    {
+        _movement.StopAgent();
     }
 }
                 
