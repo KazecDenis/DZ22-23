@@ -49,6 +49,9 @@ public class CharacterBehavior : MonoBehaviour, IDamageable, IMovable
 
     public void Move(Vector3 position)
     {
+        if (_character.Health.IsDead)
+            return;
+            
         _meshMovement.TrySetDestination(position);
     }
 
