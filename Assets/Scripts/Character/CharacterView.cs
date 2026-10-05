@@ -7,24 +7,32 @@ public class CharacterView : MonoBehaviour
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private Character _character;
     [SerializeField] private float _blendSpeed = 3f;
+    private AgentJumper _agentJumper;
     private string _layerIndex = "Wounded";
     private float _deadZone = 0.05f;
     private readonly int IsRunningKeyAnimator = Animator.StringToHash("IsRun");
     private readonly int IsDeadKeyAnimator = Animator.StringToHash("IsDead");
-    private readonly string TakeDamageAnimationKey = "TakeDamage";
+    private readonly int IsJumpProcessAnimation = Animator.StringToHash("IsJump");
+    private readonly int TakeDamageAnimationKey = Animator.StringToHash("TakeDamage");
     private readonly float OnLayerWounded = 1f;
     private readonly float OffLayerWounded = 0f;
     private float _weight;
 
-    public void Initialize(Character character)
+    public void Initialize(Character character, AgentJumper jumper)
     {
         _character = character;
+        _agentJumper = jumper;
     }
 
     private void Update()
     {
         if (_character.Health.IsDead)
             return;
+
+        if (_agentJumper.InProcess)
+            StartJump();
+        else
+            EndJump();
 
         UpdateMovementAnimation();
         UpdateHealthAnimation();
@@ -59,6 +67,8 @@ public class CharacterView : MonoBehaviour
     private void StopRunning() => _animator.SetBool(IsRunningKeyAnimator, false);
     public void StartDeadAnimation() => _animator.SetTrigger(IsDeadKeyAnimator);
     public void StartTakeDamageAnimation() => _animator.SetTrigger(TakeDamageAnimationKey);
+    private void StartJump() => _animator.SetBool(IsJumpProcessAnimation, true);
+    private void EndJump() => _animator.SetBool(IsJumpProcessAnimation, false);
 }
     
         

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Mine : MonoBehaviour
@@ -9,16 +10,9 @@ public class Mine : MonoBehaviour
     [SerializeField] private ParticleSystem _explosionEffect;
     private bool _isExplode;
     private bool _isActivate;
-    private float _timer;
 
     private void Update()
     {
-        if (_isActivate)
-        {
-            UpdateTimer();
-            return;
-        }
-
         CheckTrigger();
     }
 
@@ -37,22 +31,16 @@ public class Mine : MonoBehaviour
 
             if(damageable != null)
             {
-                _isActivate = true;
-                Debug.Log("мина активирована");
+                if (!_isActivate)
+                {
+                    _isActivate = true;
+                    StartCoroutine(ExplosionDelay());
+                }
+
                 return;
             }
         }    
     }
-    private void UpdateTimer()
-    {
-        _timer += Time.deltaTime;
-        Debug.Log($"до взрыва осталось {_explosionDelay - _timer}");
-
-        if (_timer >= _explosionDelay)
-        {
-            Explode();
-        }
-    } 
     private void PlayExplodeEffect()
     {
         _explosionEffect.transform.SetParent(null);
@@ -77,6 +65,13 @@ public class Mine : MonoBehaviour
         PlayExplodeEffect();
         Destroy(gameObject);
         Debug.Log("Взрыв");
+    }
+
+    private IEnumerator ExplosionDelay()
+    {
+       yield return new WaitForSeconds(_explosionDelay);
+
+       Explode();
     }
 }
 
