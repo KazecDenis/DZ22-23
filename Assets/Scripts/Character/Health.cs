@@ -25,4 +25,15 @@ public class Health
         if (Current < 0)
             Current = 0;
     }
+
+    public void AddHealth(int healthCount)
+    {
+        if (IsDead)
+            return;
+
+        Current += healthCount;
+
+        if (Current >= Max)
+            Current = Max;
+    }
 }

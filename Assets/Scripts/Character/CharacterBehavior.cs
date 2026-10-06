@@ -8,6 +8,7 @@ public class CharacterBehavior : MonoBehaviour, IDamageable, IMovable
     [SerializeField] private CharacterView _characterView;
     [SerializeField] private float _jumpSpeed;
     [SerializeField] private AnimationCurve _jumpYOffset;
+    [SerializeField] private int _healAmount = 20;
     private Character _character;
     private NavMeshMovement _meshMovement;
     private NavMeshAgent _agent;
@@ -26,7 +27,7 @@ public class CharacterBehavior : MonoBehaviour, IDamageable, IMovable
         _meshRotator = new NavMeshRotator(_agent, directionRotate);
 
         _agentJumper = new AgentJumper(_agent, this, _jumpSpeed, _jumpYOffset);
-        
+
         _characterView.Initialize(_character, _agentJumper);
     }
 
@@ -69,6 +70,13 @@ public class CharacterBehavior : MonoBehaviour, IDamageable, IMovable
     {
         _meshMovement.StopAgent();
     }
+
+    public void Heal()
+    {
+        _character.Health.AddHealth(_healAmount);
+        Debug.Log(_character.Health.Current);
+    }
+        
 }
         
 
