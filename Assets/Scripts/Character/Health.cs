@@ -31,6 +31,9 @@ public class Health
         if (IsDead)
             return;
 
+        if (healthCount <= 0)
+            return;
+
         Current += healthCount;
 
         if (Current >= Max)

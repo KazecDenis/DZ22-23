@@ -8,7 +8,6 @@ public class CharacterBehavior : MonoBehaviour, IDamageable, IMovable
     [SerializeField] private CharacterView _characterView;
     [SerializeField] private float _jumpSpeed;
     [SerializeField] private AnimationCurve _jumpYOffset;
-    [SerializeField] private int _healAmount = 20;
     private Character _character;
     private NavMeshMovement _meshMovement;
     private NavMeshAgent _agent;
@@ -71,10 +70,14 @@ public class CharacterBehavior : MonoBehaviour, IDamageable, IMovable
         _meshMovement.StopAgent();
     }
 
-    public void Heal()
+    public bool Heal(int healAmount)
     {
-        _character.Health.AddHealth(_healAmount);
+        if (_character.Health.Current >= _character.Health.Max)
+            return false;
+
+        _character.Health.AddHealth(healAmount);
         Debug.Log(_character.Health.Current);
+        return true;
     }
         
 }

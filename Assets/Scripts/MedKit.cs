@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class MedKit : MonoBehaviour
 {
+    [SerializeField] private int _healAmount = 20;
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.name);
@@ -9,9 +10,10 @@ public class MedKit : MonoBehaviour
 
         if (player != null)
         {
-            player.Heal();
-            Debug.Log("вижу игрока");
-            Destroy(gameObject);
+            if (player.Heal(_healAmount))
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
