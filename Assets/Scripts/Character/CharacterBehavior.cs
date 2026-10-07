@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,12 +8,14 @@ public class CharacterBehavior : MonoBehaviour, IDamageable, IMovable
     [SerializeField] private float _rotationSpeed = 600f;
     [SerializeField] private CharacterView _characterView;
     [SerializeField] private float _jumpSpeed;
-    [SerializeField] private AnimationCurve _jumpYOffset;
+    [SerializeField] private AnimationCurve _jumpYOffset;  
+    [SerializeField] private AudioSource _stepSound;
     private Character _character;
     private NavMeshMovement _meshMovement;
     private NavMeshAgent _agent;
     private AgentJumper _agentJumper;
     private NavMeshRotator _meshRotator;
+    private Coroutine _soundStepCoroutine;
     
     private void Awake()
     {
@@ -39,6 +42,24 @@ public class CharacterBehavior : MonoBehaviour, IDamageable, IMovable
 
         if (_agent.isOnOffMeshLink)
             _agentJumper.Jump(_agent.currentOffMeshLinkData);
+
+        
+        if (IsPlayStepSound())
+        {
+            if (_soundStepCoroutine == null)
+            {
+                _soundStepCoroutine = StartCoroutine(DelayStepSound());
+            }
+        }
+        else
+        {
+            if (_soundStepCoroutine != null)
+            {
+                
+                StopCoroutine(_soundStepCoroutine);
+                _soundStepCoroutine = null;
+            }
+        }
     }
 
     public void TakeDamage(int damage)
@@ -61,7 +82,7 @@ public class CharacterBehavior : MonoBehaviour, IDamageable, IMovable
     {
         if (_character.Health.IsDead)
             return;
-            
+        
         _meshMovement.TrySetDestination(position);
     }
 
@@ -79,7 +100,25 @@ public class CharacterBehavior : MonoBehaviour, IDamageable, IMovable
         Debug.Log(_character.Health.Current);
         return true;
     }
-        
+
+    private IEnumerator DelayStepSound()
+    {
+        while (IsPlayStepSound())
+        {
+           _stepSound.Play(); 
+            yield return new WaitForSeconds(0.4f);
+        }
+
+        _stepSound.Stop();
+    }
+
+    private bool IsPlayStepSound()
+    {
+        if (_agent.velocity.magnitude < 0.1f)
+            return false;
+
+        return true;
+    }
 }
         
 

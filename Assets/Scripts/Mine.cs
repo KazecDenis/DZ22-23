@@ -8,6 +8,7 @@ public class Mine : MonoBehaviour
     [SerializeField] private float _triggerRadius = 3f;
     [SerializeField] private float _explosionDelay = 3f;
     [SerializeField] private ParticleSystem _explosionEffect;
+    [SerializeField] private AudioSource _audioSource;
     private bool _isExplode;
     private bool _isActivate;
 
@@ -41,6 +42,11 @@ public class Mine : MonoBehaviour
             }
         }    
     }
+    private void PlayExplodeSound()
+    {
+        _audioSource.transform.SetParent(null);
+        _audioSource.Play();
+    }
     private void PlayExplodeEffect()
     {
         _explosionEffect.transform.SetParent(null);
@@ -61,6 +67,7 @@ public class Mine : MonoBehaviour
                 damageable.TakeDamage(_damage);
         }
 
+        PlayExplodeSound();
         _isExplode = true;
         PlayExplodeEffect();
         Destroy(gameObject);
