@@ -9,8 +9,7 @@ AudioMixerGroupController:
   m_Name: music
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: a502755b2cec441d9808f2c524e6737e
-  m_Children:
-  - {fileID: -6990711660228626105}
+  m_Children: []
   m_Volume: 3cb922d9888af445b90e60ceca169917
   m_Pitch: cb97487f8d3864c1ab7ae4a8ebb27f5e
   m_Send: 00000000000000000000000000000000
@@ -79,7 +78,7 @@ AudioMixerController:
   m_Snapshots:
   - {fileID: 24500006}
   m_StartSnapshot: {fileID: 24500006}
-  m_SuspendThreshold: -80
+  m_SuspendThreshold: 0
   m_EnableSuspend: 1
   m_UpdateMode: 0
   m_ExposedParameters:
@@ -105,6 +104,7 @@ AudioMixerGroupController:
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: e37a07ee919914adb87f6488562c8678
   m_Children:
+  - {fileID: -6990711660228626105}
   - {fileID: -8620552589491908327}
   m_Volume: 6461cdcae00dc406bbe0681aba5f576d
   m_Pitch: 1219d9ca9504a4e6fb145e5293e65238
