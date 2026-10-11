@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class CharacterBehavior : MonoBehaviour, IDamageable, IMovable
+public class CharacterBehavior : MonoBehaviour, IDamageable, IMovable, IHeal
 {
     [SerializeField] private int _maxHealth = 100;
     [SerializeField] private float _rotationSpeed = 600f;

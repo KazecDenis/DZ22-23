@@ -14,6 +14,9 @@ public class Mine : MonoBehaviour
 
     private void Update()
     {
+        if (_isActivate)
+            return;
+
         CheckTrigger();
     }
 
@@ -32,16 +35,16 @@ public class Mine : MonoBehaviour
 
             if(damageable != null)
             {
-                if (!_isActivate)
-                {
-                    _isActivate = true;
-                    StartCoroutine(ExplosionDelay());
-                }
+                _isActivate = true;
+                StartCoroutine(ExplosionDelay());
 
                 return;
             }
         }    
     }
+          
+                
+
     private void PlayExplodeSound()
     {
         _audioSource.transform.SetParent(null);

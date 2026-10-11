@@ -6,7 +6,7 @@ public class MedKit : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.name);
-        CharacterBehavior player = other.GetComponent<CharacterBehavior>();
+        IHeal player = other.GetComponent<IHeal>();
 
         if (player != null)
         {
