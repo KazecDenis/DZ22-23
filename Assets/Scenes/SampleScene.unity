@@ -22899,6 +22899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _viewFlagMove: {fileID: 0}
+  _rectTransforms: []
 --- !u!4 &2020363896
 Transform:
   m_ObjectHideFlags: 0
@@ -23810,6 +23811,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _viewFlagMove: {fileID: 2109919439}
+  _rectTransforms:
+  - {fileID: 1121917712}
+  - {fileID: 1228228471}
 --- !u!4 &2109919433
 Transform:
   m_ObjectHideFlags: 0
