@@ -17,6 +17,8 @@ public class CharacterBehavior : MonoBehaviour, IDamageable, IMovable
     private JumpController _jumpController;
     private NavMeshRotator _meshRotator;
     private Coroutine _soundStepCoroutine;
+
+    public bool IsJumping() => _agentJumper.InProcess;
     
     private void Awake()
     {
@@ -32,7 +34,7 @@ public class CharacterBehavior : MonoBehaviour, IDamageable, IMovable
         _agentJumper = new AgentJumper(_agent, this, _jumpSpeed, _jumpYOffset);
         _jumpController = new JumpController(_agent, _agentJumper);
 
-        _characterView.Initialize(_character, _agentJumper);
+        _characterView.Initialize(_character, this);
     }
 
     private void Update()

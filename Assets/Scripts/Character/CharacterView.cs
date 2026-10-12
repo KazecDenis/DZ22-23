@@ -7,7 +7,7 @@ public class CharacterView : MonoBehaviour
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private Character _character;
     [SerializeField] private float _blendSpeed = 3f;
-    private AgentJumper _agentJumper;
+    private CharacterBehavior _characterBehavior;
     private string _layerIndex = "Wounded";
     private float _deadZone = 0.05f;
     private readonly int IsRunningKeyAnimator = Animator.StringToHash("IsRun");
@@ -18,10 +18,10 @@ public class CharacterView : MonoBehaviour
     private readonly float OffLayerWounded = 0f;
     private float _weight;
 
-    public void Initialize(Character character, AgentJumper jumper)
+    public void Initialize(Character character, CharacterBehavior characterBehavior)
     {
         _character = character;
-        _agentJumper = jumper;
+        _characterBehavior = characterBehavior;
     }
 
     private void Update()
@@ -29,11 +29,7 @@ public class CharacterView : MonoBehaviour
         if (_character.Health.IsDead)
             return;
 
-        if (_agentJumper.InProcess)
-            StartJump();
-        else
-            EndJump();
-
+        UpdateJumpAnimation();
         UpdateMovementAnimation();
         UpdateHealthAnimation();
     }
@@ -50,6 +46,14 @@ public class CharacterView : MonoBehaviour
             StartRunning();
         else 
             StopRunning();
+    }
+
+    private void UpdateJumpAnimation()
+    {
+        if(_characterBehavior.IsJumping())
+            StartJump();
+        else
+            EndJump();
     }
 
     private void UpdateHealthAnimation()
