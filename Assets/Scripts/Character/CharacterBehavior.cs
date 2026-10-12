@@ -14,6 +14,7 @@ public class CharacterBehavior : MonoBehaviour, IDamageable, IMovable
     private NavMeshMovement _meshMovement;
     private NavMeshAgent _agent;
     private AgentJumper _agentJumper;
+    private JumpController _jumpController;
     private NavMeshRotator _meshRotator;
     private Coroutine _soundStepCoroutine;
     
@@ -29,6 +30,7 @@ public class CharacterBehavior : MonoBehaviour, IDamageable, IMovable
         _meshRotator = new NavMeshRotator(_agent, directionRotate);
 
         _agentJumper = new AgentJumper(_agent, this, _jumpSpeed, _jumpYOffset);
+        _jumpController = new JumpController(_agent, _agentJumper);
 
         _characterView.Initialize(_character, _agentJumper);
     }
@@ -40,8 +42,7 @@ public class CharacterBehavior : MonoBehaviour, IDamageable, IMovable
 
         _meshRotator.Update(Time.deltaTime);  
 
-        if (_agent.isOnOffMeshLink)
-            _agentJumper.Jump(_agent.currentOffMeshLinkData);
+        _jumpController.Update();
 
         
         if (IsPlayStepSound())
